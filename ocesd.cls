@@ -150,13 +150,13 @@
 
   \noindent\textbf{15. Other acomplishments.} \@otheraccomplishments
 
-  \noindent\textbf{16. Discussion points.} \@discussion
-
-  \noindent \textbf{17. Filed.}\footnote{The tick boxes mean that the stated
+  \noindent \textbf{16. Filed.}\footnote{The tick boxes mean that the stated
   item is on file in the main office of the Department, or is being provided as
   an attachment to this document.} annual progress report $\Box$ $/$ minutes of
   committee meetings $\Box$ $/$ program form $\Box$ $/$ thesis proposal $\Box$
   $/$ fieldwork $\Box$
+
+  \noindent\textbf{17. Discussion points.} \@discussion
 
   \noindent\textbf{Initials:}
   \hspace{1em}\underline{\phantom{\hspace{3em}}}\hspace{1em} (student)
