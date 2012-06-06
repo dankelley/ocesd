@@ -9,18 +9,19 @@
   in the Department of Oceanography at Dalhousie University}
 \def\filename{ocesd.dtx}
 
-\def\revtex@pageid{\xdef\@thefnmark{\null}
-\@footnotetext{Write dates as YYYY-MM-DD [MIP], where MIP stands for
-month-in-program.  This dossier is intended to be useful for many
-purposes, so it makes sense to include information in e.g. 13 and 14 that might
-be useful in developing a CV for a job application.
-(This document was prepared with the \texttt{ocesd} \LaTeX\/
-macro, version \oceversion, available from Dan Kelley.)
-}}
-\let\ltx@enddoc=\enddocument
-\def\enddocument{\vfill\revtex@pageid\ltx@enddoc}
-
+%\def\revtex@pageid{\xdef\@thefnmark{\null}
+%\@footnotetext{Write dates as YYYY-MM-DD [MIP], where MIP stands for
+%month-in-program.  This dossier is intended to be useful for many
+%purposes, so it makes sense to include information in e.g. 13 and 14 that might
+%be useful in developing a CV for a job application.
+%(This document was prepared with the \texttt{ocesd} \LaTeX\/
+%macro, version \oceversion, available from Dan Kelley.)
+%}}
+%\let\ltx@enddoc=\enddocument
+%\def\enddocument{\vfill\revtex@pageid\ltx@enddoc}
+%
 \RequirePackage{ifthen}
+\RequirePackage{amssymb}
 
 \newcommand{\dal@ptsize}{12pt}
 \newif\if@mainmatter        \@mainmattertrue
@@ -38,20 +39,25 @@ macro, version \oceversion, available from Dan Kelley.)
 \def\sep{\hspace{0.2em plus 0.1em minus 0.1em}$\mid$\hspace{0.2em plus 0.1em minus 0.1em}}
 
 \def\name#1{\gdef\@name{#1}}
+\def\banner#1{\gdef\@banner{#1}}
+\def\startdate#1{\gdef\@startdate{#1}}
 \def\mip#1{\gdef\@mip{#1}}
 \def\program#1{\gdef\@program{#1}}
+\def\phdtransfer#1{\gdef\@phdtransfer{#1}}
 \def\department#1{\gdef\@department{#1}}
 \def\supervisor#1{\gdef\@supervisor{#1}}
 \def\cosupervisor#1{\gdef\@cosupervisor{#1}}
 \def\committee#1{\gdef\@committee{#1}}
 \def\meetingdates#1{\gdef\@meetingdates{#1}}
 \def\funding#1{\gdef\@funding{#1}}
+\def\scholarships#1{\gdef\@scholarships{#1}}
 \def\coursestaken#1{\gdef\@coursestaken{#1}}
 \def\coursesplanned#1{\gdef\@coursesplanned{#1}}
 \def\thesisproposal#1{\gdef\@thesisproposal{#1}}
 \def\qualifyingexamination#1{\gdef\@qualifyingexamination{#1}}
 \def\fieldwork#1{\gdef\@fieldwork{#1}}
 \def\thesis#1{\gdef\@thesis{#1}}
+\def\extension#1{\gdef\@extension{#1}}
 \def\presentations#1{\gdef\@presentations{#1}}
 \def\publications#1{\gdef\@publications{#1}}
 \def\awards#1{\gdef\@awards{#1}}
@@ -61,19 +67,24 @@ macro, version \oceversion, available from Dan Kelley.)
 \def\discussion#1{\gdef\@discussion{#1}}
 
 \def\@name{}
+\def\@banner{}
+\def\@startdate{}
 \def\@mip{}
 \def\@program{}
+\def\@phdtransfer{}
 \def\@supervisor{}
 \def\@cosupervisor{}
 \def\@committee{}
 \def\@meetingdates{}
 \def\@funding{}
+\def\@scholarships{}
 \def\@coursestaken{}
 \def\@coursesplanned{}
 \def\@thesisproposal{}
 \def\@qualifyingexamination{}
 \def\@fieldwork{}
 \def\@thesis{}
+\def\@extension{}
 \def\@presentations{}
 \def\@publications{}
 \def\@awards{}
@@ -100,39 +111,52 @@ macro, version \oceversion, available from Dan Kelley.)
     %\vskip 5pt plus 5pt minus 10pt
   \end{center}
 
-  \noindent\textbf{1. Identification.} \@name \sep \@program \sep \@mip\ months in progress
+  % FIXME: the form can compute MIP directly from the start date
+  \noindent\textbf{1. Identification.} \@name \sep \@banner \sep \@program
+  \ifthenelse{\equal{\@phdtransfer}{}}{}{\ (transferred \@phdtransfer\ from MSc)}\sep \@startdate\ [\@mip\ months in program]
 
   \noindent\textbf{2. Funding sources.} \@funding
 
-  \noindent\textbf{3. Supervision.} supervisor \@supervisor
+  \noindent\textbf{3. Scholarships.} \@scholarships
+
+  \noindent\textbf{4. Supervision.}\footnote{Committee meetings are to be held at least twice per year.} supervisor \@supervisor
   \ifthenelse{\equal{\@cosupervisor}{}}{}{\sep cosupervisor \@cosupervisor}
   \sep committee: \@committee \sep meetings: \@meetingdates
   
-  \noindent\textbf{4. Courses.} Completed: \@coursestaken \sep Planned: \@coursesplanned
+  \noindent\textbf{5. Courses.} Completed: \@coursestaken \sep Planned: \@coursesplanned
 
-  \noindent\textbf{5. Thesis proposal.} \@thesisproposal
+  \noindent\textbf{6. Thesis proposal.}\ifthenelse{\equal{\@program}{PhD}}{\footnote{The thesis proposal is due by month 20 in the PhD program.}}{\footnote{The thesis proposal is due by month 12 in the MScprogram.}} \@thesisproposal
 
-  \ifthenelse{\equal{\@program}{PhD}}%
-  {\noindent\textbf{6. Qualifying Examination.} \@qualifyingexamination}
-  {\noindent\textbf{6. Qualifying Examination.} (NA, since in MSc program)}
+  \noindent\ifthenelse{\equal{\@program}{PhD}}%
+  {\textbf{7. Qualifying Examination.}\footnote{The Qualifying Examination is due between
+  month 9 and 12 in program, although the Curriculum Committee may grant
+  extensions up to month 15 if there is a compelling conflict such as
+  fieldwork.} \@qualifyingexamination}%
+  {\textbf{7. Qualifying Examination.}\footnote{The qualifying examination is not relevant to the MSc program.}}
 
-  \noindent\textbf{7. Fieldwork.} \@fieldwork
+  \noindent\textbf{8. Fieldwork.} \@fieldwork
 
-  \noindent\textbf{8. Thesis.} \@thesis
+  \noindent\textbf{9. Thesis.} \@thesis
 
-  \noindent\textbf{9. Presentations.} \@presentations
+  \noindent\textbf{10. Presentations.} \@presentations
 
-  \noindent\textbf{10. Publications.} \@publications
+  \noindent\textbf{11. Publications.} \@publications
 
-  \noindent\textbf{11. Awards.} \@awards
+  \noindent\textbf{12. Awards.} \@awards
 
-  \noindent\textbf{12. Teaching.} \@awards
+  \noindent\textbf{13. Teaching.} \@teaching
 
-  \noindent\textbf{13. Contributions.} \@contributions
+  \noindent\textbf{14. Contributions.} \@contributions
 
-  \noindent\textbf{14. Other acomplishments.} \@otheraccomplishments
+  \noindent\textbf{15. Other acomplishments.} \@otheraccomplishments
 
-  \noindent\textbf{15. Discussion points.} \@discussion
+  \noindent\textbf{16. Discussion points.} \@discussion
+
+  \noindent \textbf{17. Filed.}\footnote{The tick boxes mean that the stated
+  item is on file in the main office of the Department, or is being provided as
+  an attachment to this document.} annual progress report $\Box$ $/$ minutes of
+  committee meetings $\Box$ $/$ program form $\Box$ $/$ thesis proposal $\Box$
+  $/$ fieldwork $\Box$
 
   \noindent\textbf{Initials:}
   \hspace{1em}\underline{\phantom{\hspace{3em}}}\hspace{1em} (student)
